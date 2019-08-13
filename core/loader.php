@@ -17,6 +17,7 @@ require 'models/Sync.php';
 require 'controllers/test_controller.php';
 require 'controllers/posts_controller.php';
 require 'controllers/update_controller.php';
+require 'controllers/postsprimary_controller.php';
 
 
 //routes
