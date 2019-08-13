@@ -17,7 +17,9 @@ class Platzi extends Model {
 
   public function get_primary(){
     if (!$this->primary) $this->load_data(1);
-    return $this->primary;
+    $data = $this->primary;
+    $data['created_at'] = strtotime($data['created_at']);
+    return $data;
   }
 
   public function get_latest_post(){

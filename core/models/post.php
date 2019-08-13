@@ -48,4 +48,28 @@ class Post extends Model {
     $post_latest = $this->Connect->fetch("SELECT created_at FROM posts ORDER BY id DESC LIMIT 1");
     return (int) $post_latest['created_at'];
   }
+
+  public function update_primary ($data){
+    $title = $this->prepare($data['title']);
+    $votes = $this->prepare($data['votes']);
+    $username = $this->prepare($data['username']);
+    $avatar = $this->prepare($data['avatar']);
+    $points = $this->prepare($data['points']);
+    $course = $this->prepare($data['course']);
+    $body = $this->prepare($data['body']);
+    $id_platzi = $this->prepare($data['id_platzi']);
+    $created_at = $this->prepare($data['created_at']);
+    $cover = $this->prepare($data['cover']);
+    $url = $this->prepare($data['url']);
+    $description = $this->prepare($data['description']);
+    $comments = $this->prepare($data['comments']);
+
+    $state = $this->Connect->set("UPDATE post_primary SET title = '$title', votes = $votes, username = '$username', avatar = '$avatar', points = $points, course = '$course', body = '$body', comments = '$comments', id_platzi = $id_platzi, created_at = '$created_at', cover = '$cover', url = '$url', description = '$description'");
+    return $state;
+  }
+
+  public function get_post_primary (){
+    $data = $this->Connect->fetch("SELECT * FROM post_primary WHERE id = 1");
+    return $data;
+  }
 }
