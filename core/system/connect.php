@@ -11,7 +11,7 @@ class Connect  extends mysqli {
     parent::__construct (DB_HOST, DB_USER, DB_PASS,DB_NAME );
     $this->set_charset(DB_CHARSET);
   }
-  
+
   public function __destruct (){
     $this->close();
   }

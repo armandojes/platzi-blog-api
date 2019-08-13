@@ -40,7 +40,10 @@ class Platzi extends Model {
       'cover' => $post_primary['cover_image'],
       'url' => $post_primary['slug'],
       'description' => $post_primary['content'],
+      'comments' => $post_single['comments'],
+
     ];
+
     return $post_full_data;
   }
 
@@ -58,7 +61,7 @@ class Platzi extends Model {
     $data['points'] = $user->find('span')[0]->innertext;
     $data['course'] = !empty($Dom->find('a.CourseBanner-url')[0]->outertext) ? $Dom->find('a.CourseBanner-url')[0]->outertext : null;
     $data['body'] = $Dom->find('div.Discussion-content')[0]->innertext;
-    $data['coments'] = !empty($Dom->find('section.CommentList')[0]->outertext) ? $Dom->find('section.CommentList')[0]->outertext : null;
+    $data['comments'] = !empty($Dom->find('section.CommentList')[0]->outertext) ? $Dom->find('section.CommentList')[0]->outertext : null;
     return $data;
   }
 

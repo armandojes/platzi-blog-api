@@ -17,7 +17,6 @@ class update_controller extends controller {
       array_push ($posts_nuevos, $Platzi->merge_post($post_platzi));
     }
 
-
     //insert database
     $posts_nuevos = array_reverse($posts_nuevos);
     foreach ($posts_nuevos as $post_nuevos) {

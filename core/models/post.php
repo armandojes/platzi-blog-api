@@ -17,8 +17,9 @@ class Post extends Model {
     $cover = $this->prepare($data['cover']);
     $url = $this->prepare($data['url']);
     $description = $this->prepare($data['description']);
+    $comments = $this->prepare($data['comments']);
 
-    $id_created = $this->Connect->create("INSERT INTO posts (title, votes, username, avatar, points, course, body, id_platzi, created_at, cover, url, description) VALUES ('$title',$votes,'$username','$avatar',$points,'$course','$body',$id_platzi,'$created_at','$cover','$url','$description')");
+    $id_created = $this->Connect->create("INSERT INTO posts (title, votes, username, avatar, points, course, body, comments, id_platzi, created_at, cover, url, description) VALUES ('$title',$votes,'$username','$avatar',$points,'$course','$body','$comments',$id_platzi,'$created_at','$cover','$url','$description')");
     return $id_created;
   }
 
