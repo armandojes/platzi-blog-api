@@ -1,7 +1,7 @@
 <?php
 
 class Post extends Model {
-  private $result_for_page;
+  private $itemsforpage = 10;
 
 
   public function create ($data){
@@ -22,16 +22,29 @@ class Post extends Model {
     return $id_created;
   }
 
-  public function copy_page($page){
-    $Platzi = new Platzi();
-    $posts = array_reverse($Platzi->get_posts($page));
-    foreach ($posts as $post) {
-      $full_post = $Platzi->merge_post($post);
-      $this->create($full_post);
-    }
-  }
+
 
   public function get_list ($page = 1){
-    
+    $this->set_list(true);
+    $initialfetch = (($page - 1) * $this->itemsforpage);
+    $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description FROM posts ORDER BY id DESC LIMIT $initialfetch, $this->itemsforpage ");
+    return $posts;
+  }
+
+
+  public function get_num_items (){
+    $data = $this->Connect->fetch("SELECT id FROM posts");
+    return count($data);
+  }
+
+  public function get_num_pages (){
+    $count = $this->get_num_items();
+    $count = ($count / $this->itemsforpage);
+    return (int) ceil($count);
+  }
+
+  public function get_latest (){
+    $post_latest = $this->Connect->fetch("SELECT created_at FROM posts ORDER BY id DESC LIMIT 1");
+    return (int) $post_latest['created_at'];
   }
 }

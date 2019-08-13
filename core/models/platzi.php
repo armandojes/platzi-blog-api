@@ -22,7 +22,7 @@ class Platzi extends Model {
 
   public function get_latest_post(){
     if (!$this->latest_post) $this->load_data(1);
-    return $this->latest_post;
+    return $this->latest_post['created_at'];
   }
 
   public function merge_post ($post_primary){
@@ -90,6 +90,7 @@ class Platzi extends Model {
     $post_destacado = null;
     foreach ($posts as $post) {
       if (in_array($post['id'], $order)){
+        $post['created_at'] = strtotime($post['created_at']);
         array_push($post_filter, $post);
       } else {
         $post_destacado = $post;
@@ -97,6 +98,4 @@ class Platzi extends Model {
     }
     return [$post_filter, $post_destacado];
   }
-
-
 }

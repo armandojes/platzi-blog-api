@@ -11,9 +11,12 @@ require 'system/model.php';
 require 'models/dom.php';
 require 'models/platzi.php';
 require 'models/Post.php';
+require 'models/Sync.php';
 
 //controller
 require 'controllers/test_controller.php';
+require 'controllers/posts_controller.php';
+require 'controllers/update_controller.php';
 
 
 //routes
