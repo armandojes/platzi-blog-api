@@ -17,7 +17,7 @@ class posts_controller extends controller{
       'num_pages' => $num_pages,
       'num_items' => $num_items,
       'error' => empty($posts_list) ? true : false,
-      'error_descript' => 'error interno del servidor'
+      'error_descript' => empty($posts_list) ? 'error interno del servidor' : '',
     ]);
 
   }
