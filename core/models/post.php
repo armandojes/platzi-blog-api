@@ -108,4 +108,9 @@ class Post extends Model {
     $comments = $this->Connect->fetch("SELECT comments FROM posts WHERE url = '$url' LIMIT 1");
     return $comments;
   }
+
+  public function get_comments_primary(){
+    $comments = $this->Connect->fetch("SELECT comments FROM post_primary WHERE id = 1 LIMIT 1");
+    return $comments;
+  }
 }

@@ -5,7 +5,11 @@ class comments_controller extends controller {
   public function execute (){
 
     $Post = new Post();
-    $comments = $Post->get_comments($this->params->url);
+
+    $post = $Post->get_post_primary_full();
+    $comments = $this->params->url === $post['url']
+     ? $Post->get_comments_primary()
+     : $Post->get_comments($this->params->url);
 
     $this->response([
       'error' => $comments === false ? true : false,
@@ -14,3 +18,9 @@ class comments_controller extends controller {
     ]);
   }
 }
+
+
+// $post = $Post->get_post_primary_full();
+// $post = $this->params->url === $post['url']
+//   ? $post
+//   : $Post->get_single($this->params->url);
