@@ -97,4 +97,9 @@ class Post extends Model {
     $post = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body FROM posts WHERE url = '$url' LIMIT 1");
     return $post;
   }
+
+  public function get_comments($url){
+    $comments = $this->Connect->fetch("SELECT comments FROM posts WHERE url = '$url' LIMIT 1");
+    return $comments;
+  }
 }

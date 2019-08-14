@@ -20,6 +20,7 @@ require 'controllers/update_controller.php';
 require 'controllers/postsprimary_controller.php';
 require 'controllers/search_controller.php';
 require 'controllers/post_controller.php';
+require 'controllers/comments_controller.php';
 
 
 //routes
