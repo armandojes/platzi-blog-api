@@ -69,7 +69,13 @@ class Post extends Model {
   }
 
   public function get_post_primary (){
-    $data = $this->Connect->fetch("SELECT * FROM post_primary WHERE id = 1");
+    $data = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description FROM post_primary WHERE id = 1");
+    return $data;
+  }
+
+
+  public function get_post_primary_full (){
+    $data = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body FROM post_primary WHERE id = 1");
     return $data;
   }
 
