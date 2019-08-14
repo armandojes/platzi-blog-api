@@ -18,6 +18,7 @@ require 'controllers/test_controller.php';
 require 'controllers/posts_controller.php';
 require 'controllers/update_controller.php';
 require 'controllers/postsprimary_controller.php';
+require 'controllers/search_controller.php';
 
 
 //routes

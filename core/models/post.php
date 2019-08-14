@@ -72,4 +72,24 @@ class Post extends Model {
     $data = $this->Connect->fetch("SELECT * FROM post_primary WHERE id = 1");
     return $data;
   }
+
+  public function search ($query, $page){
+    $initialFetch = ($page -1) * $this->itemsforpage;
+    $this->set_list(true);
+    $posts_list = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, MATCH(title) AGAINST('$query') AS relevancia FROM posts WHERE MATCH(title) AGAINST('$query') ORDER BY relevancia DESC LIMIT $initialFetch,$this->itemsforpage");
+    return $posts_list;
+  }
+
+
+  public function search_num_items ($query){
+    $this->set_list(true);
+    $posts_list = $this->Connect->fetch("SELECT id FROM posts WHERE MATCH(title) AGAINST('$query')");
+    return $posts_list ? count($posts_list) : 0;
+
+  }
+
+  public function search_num_pages ($num_items){
+    $count = ($num_items / $this->itemsforpage);
+    return (int) ceil($count);
+  }
 }
