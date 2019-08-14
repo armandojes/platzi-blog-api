@@ -19,6 +19,7 @@ require 'controllers/posts_controller.php';
 require 'controllers/update_controller.php';
 require 'controllers/postsprimary_controller.php';
 require 'controllers/search_controller.php';
+require 'controllers/post_controller.php';
 
 
 //routes

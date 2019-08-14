@@ -92,4 +92,9 @@ class Post extends Model {
     $count = ($num_items / $this->itemsforpage);
     return (int) ceil($count);
   }
+
+  public function get_single($url){
+    $post = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body FROM posts WHERE url = '$url' LIMIT 1");
+    return $post;
+  }
 }
