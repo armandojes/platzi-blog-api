@@ -9,8 +9,8 @@ require 'system/connect.php';
 require 'system/model.php';
 
 //models
-require 'models/dom.php';
-require 'models/platzi.php';
+require 'models/Dom.php';
+require 'models/Platzi.php';
 require 'models/Post.php';
 require 'models/Sync.php';
 
