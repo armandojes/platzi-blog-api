@@ -1,5 +1,6 @@
 <?php
 require 'config.php';
+require 'db_credentials.php';
 
 //system
 require 'system/router.php';
