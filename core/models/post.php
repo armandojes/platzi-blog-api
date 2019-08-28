@@ -28,7 +28,7 @@ class Post extends Model {
   public function get_list ($page = 1){
     $this->set_list(true);
     $initialfetch = (($page - 1) * $this->itemsforpage);
-    $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description FROM posts ORDER BY id DESC LIMIT $initialfetch, $this->itemsforpage ");
+    $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover FROM posts ORDER BY id DESC LIMIT $initialfetch, $this->itemsforpage ");
     return $posts;
   }
 
@@ -69,20 +69,20 @@ class Post extends Model {
   }
 
   public function get_post_primary (){
-    $data = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description FROM post_primary WHERE id = 1");
+    $data = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover FROM post_primary WHERE id = 1");
     return $data;
   }
 
 
   public function get_post_primary_full (){
-    $data = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body FROM post_primary WHERE id = 1");
+    $data = $this->Connect->fetch("SELECT * FROM post_primary WHERE id = 1");
     return $data;
   }
 
   public function search ($query, $page){
     $initialFetch = ($page -1) * $this->itemsforpage;
     $this->set_list(true);
-    $posts_list = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, MATCH(title) AGAINST('$query') AS relevancia FROM posts WHERE MATCH(title) AGAINST('$query') ORDER BY relevancia DESC LIMIT $initialFetch,$this->itemsforpage");
+    $posts_list = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover MATCH(title) AGAINST('$query') AS relevancia FROM posts WHERE MATCH(title) AGAINST('$query') ORDER BY relevancia DESC LIMIT $initialFetch,$this->itemsforpage");
     return $posts_list;
   }
 
@@ -100,7 +100,7 @@ class Post extends Model {
   }
 
   public function get_single($url){
-    $post = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body FROM posts WHERE url = '$url' LIMIT 1");
+    $post = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body, cover FROM posts WHERE url = '$url' LIMIT 1");
     return $post;
   }
 
