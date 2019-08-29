@@ -2,6 +2,9 @@
 require 'config.php';
 require 'db_credentials.php';
 
+//function
+require 'functions/filter.php';
+
 //system
 require 'system/router.php';
 require 'system/controller.php';

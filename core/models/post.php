@@ -75,8 +75,10 @@ class Post extends Model {
 
 
   public function get_post_primary_full (){
-    $data = $this->Connect->fetch("SELECT * FROM post_primary WHERE id = 1");
-    return $data;
+    $post = $this->Connect->fetch("SELECT * FROM post_primary WHERE id = 1");
+    if (!$post) return false;
+    $post['body'] = filter($post['body']);
+    return $post;
   }
 
   public function search ($query, $page){
@@ -101,6 +103,8 @@ class Post extends Model {
 
   public function get_single($url){
     $post = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body, cover FROM posts WHERE url = '$url' LIMIT 1");
+    if (!$post) return false;
+    $post['body'] = filter($post['body']);
     return $post;
   }
 
