@@ -33,6 +33,14 @@ class Post extends Model {
   }
 
 
+  public function get_list_popular ($page = 1){
+    $this->set_list(true);
+    $initialfetch = (($page - 1) * $this->itemsforpage);
+    $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover FROM posts ORDER BY votes DESC LIMIT $initialfetch, $this->itemsforpage ");
+    return $posts;
+  }
+
+
   public function get_num_items (){
     $data = $this->Connect->fetch("SELECT id FROM posts");
     return count($data);
