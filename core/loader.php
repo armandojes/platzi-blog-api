@@ -5,6 +5,7 @@ require 'db_credentials.php';
 //function
 require 'functions/filter.php';
 require 'functions/get_post_platzi.php';
+require 'functions/get_coments.php';
 
 //system
 require 'system/router.php';
