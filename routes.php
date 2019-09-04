@@ -11,8 +11,7 @@ $Router->get('/postprimary', 'postsprimary_controller');
 $Router->get('/search/{query}/{page}', 'search_controller');
 $Router->get('/post/{url}', 'post_controller');
 $Router->get('/comments/{url}', 'comments_controller');
-$Router->get('/dbcopy', 'dbcopy_controller');
-
+$Router->get('/user/posts/{username}/{page}', 'user_posts_controller');
 
 
 $Router->dispatch();

@@ -31,6 +31,27 @@ class Post extends Model {
     return $posts;
   }
 
+  public function get_posts_user($username, $page = 1){
+    $username = $this->prepare($username);
+    $this->set_list(true);
+    $initialfetch = (($page - 1) * $this->itemsforpage);
+    $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover, author_id, comments FROM posts WHERE username = '$username' ORDER BY id DESC LIMIT $initialfetch, $this->itemsforpage ");
+    return $posts;
+  }
+
+  public function get_num_items_user ($username){
+    $username = $this->prepare($username);
+    $data = $this->Connect->fetch("SELECT id FROM posts WHERE username = '$username'");
+    $data = $data === false ? [] : $data;
+    return count($data);
+  }
+
+  public function get_num_pages_user ($username){
+    $count = $this->get_num_items_user($username);
+    $count = ($count / $this->itemsforpage);
+    return (int) ceil($count);
+  }
+
   public function get_list_popular ($page = 1){
     $this->set_list(true);
     $initialfetch = (($page - 1) * $this->itemsforpage);

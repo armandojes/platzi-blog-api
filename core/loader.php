@@ -29,6 +29,7 @@ require 'controllers/post_controller.php';
 require 'controllers/comments_controller.php';
 require 'controllers/posts_populars_controller.php';
 require 'controllers/clone_controller.php';
+require 'controllers/user_posts_controller.php';
 
 
 //routes
