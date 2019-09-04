@@ -7,7 +7,7 @@ class clone_controller {
 
     $Platzi = new Platzi();
     $Sync = new Sync();
-    $init = 153;
+    $init = 155;
 
     set_time_limit(0);
     ignore_user_abort(true);
@@ -15,8 +15,8 @@ class clone_controller {
     while ($init >= 1)
     {
       $Sync->copy_page($init);
-      $init  = $init -1;
-      sleep(30);
+      $init = $init -1;
+      sleep(10);
     }
   }
 }

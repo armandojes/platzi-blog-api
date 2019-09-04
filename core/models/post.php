@@ -24,15 +24,12 @@ class Post extends Model {
     return $id_created;
   }
 
-
-
   public function get_list ($page = 1){
     $this->set_list(true);
     $initialfetch = (($page - 1) * $this->itemsforpage);
-    $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover FROM posts ORDER BY id DESC LIMIT $initialfetch, $this->itemsforpage ");
+    $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover, author_id, comments FROM posts ORDER BY id DESC LIMIT $initialfetch, $this->itemsforpage ");
     return $posts;
   }
-
 
   public function get_list_popular ($page = 1){
     $this->set_list(true);
@@ -40,7 +37,6 @@ class Post extends Model {
     $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover, author_id, comments FROM posts ORDER BY votes DESC LIMIT $initialfetch, $this->itemsforpage ");
     return $posts;
   }
-
 
   public function get_num_items (){
     $data = $this->Connect->fetch("SELECT id FROM posts");
@@ -83,7 +79,6 @@ class Post extends Model {
     return $data;
   }
 
-
   public function get_post_primary_full (){
     $post = $this->Connect->fetch("SELECT * FROM post_primary WHERE id = 1");
     if (!$post) return false;
@@ -97,7 +92,6 @@ class Post extends Model {
     $posts_list = $this->Connect->fetch("SELECT id, title, votes, username, avatar, points, created_at, url, description, cover, author_id, comments, MATCH(title) AGAINST('$query') AS relevancia FROM posts WHERE MATCH(title) AGAINST('$query') ORDER BY relevancia DESC LIMIT $initialFetch,$this->itemsforpage");
     return $posts_list;
   }
-
 
   public function search_num_items ($query){
     $this->set_list(true);

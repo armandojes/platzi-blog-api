@@ -2,7 +2,7 @@
 /*
 * archvos de configuracion
 */
-define('runtime','localhost' ); 
+define('runtime','development' );
 
 
 header("Content-type: text/html");

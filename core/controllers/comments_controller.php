@@ -3,9 +3,10 @@
 class comments_controller extends controller {
 
   public function execute (){
+    $Platzi = new Platzi();
 
-    $comments = get_coments($this->params->url);
-
+    $comments = $Platzi->get_comments($this->params->url);
+    $comments = $comments ? filter($comments) : $comments;
 
     $this->response([
       'error' => $comments === false ? true : false,
