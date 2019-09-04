@@ -31,7 +31,9 @@ class Platzi extends Model {
     $post_single = $this->get_post($post_primary['slug']);
     $post_full_data = [
       'title' => $post_primary['title'],
-      'votes' => (int) $post_single['votes'],
+      'author_id' => $post_primary['author_id'],
+      'votes' => (int) $post_primary['n_stars'],
+      'comments' => (int) $post_primary['n_responses'],
       'username' => $post_single['username'],
       'avatar' => $post_single['avatar'],
       'points' => $post_single['points'],
@@ -42,13 +44,10 @@ class Platzi extends Model {
       'cover' => $post_primary['cover_image'],
       'url' => $post_primary['slug'],
       'description' => $post_primary['content'],
-      'comments' => $post_single['comments'],
-
     ];
 
     return $post_full_data;
   }
-
 
   public function get_post ($url){
     $Dom = new simple_html_dom();
@@ -56,14 +55,52 @@ class Platzi extends Model {
     $Dom->load($html_raw);
     $data = [];
     $data['title'] = $Dom->find('h1.Discussion-title-text')[0]->innertext;
-    $data['votes'] = $Dom->find('div.MainDiscussion-top')[0]->find('span.Star-number')[0]->innertext;
     $user = $Dom->find('div.DiscussionInfo-content')[0];
     $data['username'] = $user->find('a')[0]->innertext;
     $data['avatar'] = !empty($user->find('img')[0]->attr['data-cfsrc']) ? $user->find('img')[0]->attr['data-cfsrc'] : $user->find('img')[0]->attr['src'];
-    $data['points'] = $user->find('span')[0]->innertext;
     $data['course'] = !empty($Dom->find('a.CourseBanner-url')[0]->outertext) ? $Dom->find('a.CourseBanner-url')[0]->outertext : null;
-    $data['body'] = $Dom->find('div.Discussion-content')[0]->innertext;
-    $data['comments'] = !empty($Dom->find('section.CommentList')[0]->outertext) ? $Dom->find('section.CommentList')[0]->outertext : null;
+    $data['points'] = $user->find('span')[0]->innertext;
+    //obtener solo body
+    $position_start =  strpos($html_raw, '<body>');
+    $lenght =  (strrpos($html_raw, '</body>') - $position_start);
+    $html_raw = substr($html_raw, $position_start, $lenght + 7);
+
+    //obtener section primary
+    $position_start =  strpos($html_raw, '<section');
+    $lenght =  (strrpos($html_raw, '</section>') - $position_start);
+    $html_raw = substr($html_raw, $position_start + 10, $lenght - 10);
+
+    //siguente  section con etiquetas
+    $position_start =  strpos($html_raw, '<section');
+    $lenght =  (strrpos($html_raw, '</section>') - $position_start);
+    $html_raw = substr($html_raw, $position_start , $lenght);
+
+
+    //eliminar segundo seccions hermano
+    $lenght =  strrpos($html_raw, '<section');
+    $html_raw = substr($html_raw,0, $lenght);
+
+
+    //eliminar div hermano
+    $lenght =  strrpos($html_raw, '<div class="DiscusionDetail-comments"');
+    $html_raw = substr($html_raw,0, $lenght);
+
+
+    //obtener ultimo div
+    $position_start =  strrpos($html_raw, '<div class="MainDiscussion-body"');
+    $html_raw = substr($html_raw,$position_start, -10);
+
+    //obtener solo el contenido
+    $position_start =  strpos($html_raw, '<div class="Discussion-content"');
+    $lenght =  (strrpos($html_raw, '</div><div class="col-md-1"') - $position_start);
+    $html_raw = substr($html_raw, $position_start, $lenght);
+
+    //quitar ultimo class
+    $html_raw = str_replace('class="Discussion-content"', '', $html_raw);
+
+    //agregar al array
+    $data['body'] = $html_raw;
+
     return $data;
   }
 

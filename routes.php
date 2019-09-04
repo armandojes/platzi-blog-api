@@ -3,6 +3,7 @@ $Router = new Router();
 
 
 $Router->get('/test', 'test_controller');
+$Router->get('/clone', 'clone_controller');
 $Router->get('/update', 'update_controller');
 $Router->get('/posts/{page}', 'posts_controller');
 $Router->get('/posts/popular/{page}', 'posts_populars_controller');

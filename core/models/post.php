@@ -18,8 +18,9 @@ class Post extends Model {
     $url = $this->prepare($data['url']);
     $description = $this->prepare($data['description']);
     $comments = $this->prepare($data['comments']);
+    $author_id = $this->prepare($data['author_id']);
 
-    $id_created = $this->Connect->create("INSERT INTO posts (title, votes, username, avatar, points, course, body, comments, id_platzi, created_at, cover, url, description) VALUES ('$title',$votes,'$username','$avatar',$points,'$course','$body','$comments',$id_platzi,'$created_at','$cover','$url','$description')");
+    $id_created = $this->Connect->create("INSERT INTO posts (title, votes, username, author_id, avatar, points, course, body, comments, id_platzi, created_at, cover, url, description) VALUES ('$title',$votes,'$username','$author_id','$avatar',$points,'$course','$body','$comments',$id_platzi,'$created_at','$cover','$url','$description')");
     return $id_created;
   }
 
@@ -36,7 +37,7 @@ class Post extends Model {
   public function get_list_popular ($page = 1){
     $this->set_list(true);
     $initialfetch = (($page - 1) * $this->itemsforpage);
-    $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover FROM posts ORDER BY votes DESC LIMIT $initialfetch, $this->itemsforpage ");
+    $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover, author_id, comments FROM posts ORDER BY votes DESC LIMIT $initialfetch, $this->itemsforpage ");
     return $posts;
   }
 
@@ -71,13 +72,14 @@ class Post extends Model {
     $url = $this->prepare($data['url']);
     $description = $this->prepare($data['description']);
     $comments = $this->prepare($data['comments']);
+    $author_id = $this->prepare($data['author_id']);
 
-    $state = $this->Connect->set("UPDATE post_primary SET title = '$title', votes = $votes, username = '$username', avatar = '$avatar', points = $points, course = '$course', body = '$body', comments = '$comments', id_platzi = $id_platzi, created_at = '$created_at', cover = '$cover', url = '$url', description = '$description'");
+    $state = $this->Connect->set("UPDATE post_primary SET title = '$title', votes = $votes, username = '$username', avatar = '$avatar', points = $points, course = '$course', body = '$body', comments = '$comments', id_platzi = $id_platzi, created_at = '$created_at', cover = '$cover', url = '$url', description = '$description', author_id = '$author_id'");
     return $state;
   }
 
   public function get_post_primary (){
-    $data = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover FROM post_primary WHERE id = 1");
+    $data = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover, author_id, comments FROM post_primary WHERE id = 1");
     return $data;
   }
 
@@ -92,7 +94,7 @@ class Post extends Model {
   public function search ($query, $page){
     $initialFetch = ($page -1) * $this->itemsforpage;
     $this->set_list(true);
-    $posts_list = $this->Connect->fetch("SELECT id, title, votes, username, avatar, points, created_at, url, description, cover,  MATCH(title) AGAINST('$query') AS relevancia FROM posts WHERE MATCH(title) AGAINST('$query') ORDER BY relevancia DESC LIMIT $initialFetch,$this->itemsforpage");
+    $posts_list = $this->Connect->fetch("SELECT id, title, votes, username, avatar, points, created_at, url, description, cover, author_id, comments, MATCH(title) AGAINST('$query') AS relevancia FROM posts WHERE MATCH(title) AGAINST('$query') ORDER BY relevancia DESC LIMIT $initialFetch,$this->itemsforpage");
     return $posts_list;
   }
 
@@ -110,19 +112,9 @@ class Post extends Model {
   }
 
   public function get_single($url){
-    $post = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body, cover FROM posts WHERE url = '$url' LIMIT 1");
+    $post = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body, cover, author_id, comments FROM posts WHERE url = '$url' LIMIT 1");
     if (!$post) return false;
     $post['body'] = filter($post['body']);
     return $post;
-  }
-
-  public function get_comments($url){
-    $comments = $this->Connect->fetch("SELECT comments FROM posts WHERE url = '$url' LIMIT 1");
-    return $comments;
-  }
-
-  public function get_comments_primary(){
-    $comments = $this->Connect->fetch("SELECT comments FROM post_primary WHERE id = 1 LIMIT 1");
-    return $comments;
   }
 }

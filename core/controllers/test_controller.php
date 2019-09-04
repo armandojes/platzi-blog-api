@@ -1,23 +1,13 @@
 <?php
 
-
-class test_controller {
+class test_controller extends controller {
 
   public function execute (){
+    $Platzi = new Platzi();
 
-    // $Platzi = new Platzi();
-    // $Sync = new Sync();
-    // $init = 153;
-    //
-    // set_time_limit(0);
-    // ignore_user_abort(true);
-    //
-    // while ($init >= 1)
-    // {
-    //   $Sync->copy_page($init);
-    //   $init  = $init -1;
-    //   sleep(30);
-    // }
+    $simple_posts = $Platzi->get_posts(1);
+
+    
 
   }
 

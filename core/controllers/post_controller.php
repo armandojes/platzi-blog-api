@@ -7,7 +7,7 @@ class post_controller extends controller {
 
     $post = $Post->get_post_primary_full();
     $post = $this->params->url === $post['url'] ? $post : $Post->get_single($this->params->url);
-    $post['body'] = get_post_platzi($this->params->url);
+    
 
     $this->response([
       'error' => $post ? false : true,
