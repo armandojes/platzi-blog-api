@@ -28,7 +28,7 @@ class Post extends Model {
     $this->set_list(true);
     $initialfetch = (($page - 1) * $this->itemsforpage);
     $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover, author_id, comments FROM posts ORDER BY id DESC LIMIT $initialfetch, $this->itemsforpage ");
-    return $posts;
+    return time_elapsed_list($posts);
   }
 
   public function get_posts_user($username, $page = 1){
@@ -36,7 +36,7 @@ class Post extends Model {
     $this->set_list(true);
     $initialfetch = (($page - 1) * $this->itemsforpage);
     $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover, author_id, comments FROM posts WHERE username = '$username' ORDER BY id DESC LIMIT $initialfetch, $this->itemsforpage ");
-    return $posts;
+    return time_elapsed_list($posts);
   }
 
   public function get_num_items_user ($username){
@@ -56,7 +56,7 @@ class Post extends Model {
     $this->set_list(true);
     $initialfetch = (($page - 1) * $this->itemsforpage);
     $posts = $this->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover, author_id, comments FROM posts ORDER BY votes DESC LIMIT $initialfetch, $this->itemsforpage ");
-    return $posts;
+    return time_elapsed_list($posts);
   }
 
   public function get_num_items (){
@@ -97,6 +97,7 @@ class Post extends Model {
 
   public function get_post_primary (){
     $data = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, cover, author_id, comments FROM post_primary WHERE id = 1");
+    $data['created_at'] = time_elapsed($data['created_at']);
     return $data;
   }
 
@@ -104,6 +105,7 @@ class Post extends Model {
     $post = $this->Connect->fetch("SELECT * FROM post_primary WHERE id = 1");
     if (!$post) return false;
     $post['body'] = filter($post['body']);
+    $post['created_at'] = time_elapsed($post['created_at']);
     return $post;
   }
 
@@ -111,7 +113,7 @@ class Post extends Model {
     $initialFetch = ($page -1) * $this->itemsforpage;
     $this->set_list(true);
     $posts_list = $this->Connect->fetch("SELECT id, title, votes, username, avatar, points, created_at, url, description, cover, author_id, comments, MATCH(title) AGAINST('$query') AS relevancia FROM posts WHERE MATCH(title) AGAINST('$query') ORDER BY relevancia DESC LIMIT $initialFetch,$this->itemsforpage");
-    return $posts_list;
+    return time_elapsed_list($posts_list);
   }
 
   public function search_num_items ($query){
@@ -130,6 +132,7 @@ class Post extends Model {
     $post = $this->Connect->fetch("SELECT id, title, votes, username,avatar, points, created_at, url, description, body, cover, author_id, comments FROM posts WHERE url = '$url' LIMIT 1");
     if (!$post) return false;
     $post['body'] = filter($post['body']);
+    $post['created_at'] = time_elapsed($post['created_at']);
     return $post;
   }
 }

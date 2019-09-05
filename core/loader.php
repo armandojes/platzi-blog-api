@@ -4,8 +4,8 @@ require 'db_credentials.php';
 
 //function
 require 'functions/filter.php';
-require 'functions/get_post_platzi.php';
-require 'functions/get_coments.php';
+require 'functions/time_elapsed.php';
+require 'functions/time_elapsed_list.php';
 
 //system
 require 'system/router.php';
