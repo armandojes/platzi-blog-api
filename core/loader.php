@@ -6,6 +6,7 @@ require 'db_credentials.php';
 require 'functions/filter.php';
 require 'functions/time_elapsed.php';
 require 'functions/time_elapsed_list.php';
+require 'functions/parser_comments.php';
 
 //system
 require 'system/router.php';

@@ -18,7 +18,7 @@ class Platzi extends Model {
     $end_pos = strrpos($html_raw, '</section></div></div></div><section class="RelatedPosts');
     $length = ($end_pos - $start_pos);
     $html_raw = substr($html_raw,$start_pos, ($length - 32));
-    return $html_raw;
+    return parser_comments($html_raw);
   }
 
   // public functions
