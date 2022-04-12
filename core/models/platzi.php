@@ -65,8 +65,9 @@ class Platzi extends Model {
   }
 
   public function get_post ($url){
+    $context = $this->getContext();
     $Dom = new simple_html_dom();
-    $html_raw = file_get_contents("https://platzi.com/blog/$url");
+    $html_raw = file_get_contents("https://platzi.com/blog/$url", false, $context);
     $Dom->load($html_raw);
     $data = [];
     $data['title'] = $Dom->find('h1.Discussion-title-text')[0]->innertext;
@@ -121,8 +122,21 @@ class Platzi extends Model {
 
 
   //private functions
+
+  private function getContext (){
+    $context = stream_context_create(
+      array(
+        "http" => array(
+            "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+        )
+      )
+    );
+    return $context;
+  }
+
   private function load_data ($page){
-    $this->html_raw = file_get_contents("https://platzi.com/blog/?contribution_filter=new&contribution_page=$page&search=");
+    $context = $this->getContext();
+    $this->html_raw = file_get_contents("https://platzi.com/blog/?contribution_filter=new&contribution_page=$page&search=", false, $context);
     $data = $this->parse();
     [$items, $primary] = $this->filter_posts($data['initialState']['entities']['contributions'], $data['initialState']['order']);
     $this->posts = $items;
@@ -139,7 +153,6 @@ class Platzi extends Model {
     $html_prepare = substr ($this->html_raw , $position_start, $position_end);
     $data_joson = json_decode($html_prepare, true);
     return $data_joson;
-
   }
 
   private function filter_posts($posts, $order){

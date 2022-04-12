@@ -7,7 +7,7 @@ class test_controller extends controller {
 
     $simple_posts = $Platzi->get_posts(1);
 
-    
+    var_dump($simple_posts);
 
   }
 

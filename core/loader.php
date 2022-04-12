@@ -15,10 +15,10 @@ require 'system/connect.php';
 require 'system/model.php';
 
 //models
-require 'models/Dom.php';
-require 'models/Platzi.php';
-require 'models/Post.php';
-require 'models/Sync.php';
+require 'models/dom.php';
+require 'models/platzi.php';
+require 'models/post.php';
+require 'models/sync.php';
 
 //controller
 require 'controllers/test_controller.php';

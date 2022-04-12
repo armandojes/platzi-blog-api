@@ -1,1 +1,4 @@
 /core/db_credentials.php
+
+.vercel
+/node_modules
